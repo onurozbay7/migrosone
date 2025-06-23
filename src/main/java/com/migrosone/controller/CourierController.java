@@ -2,7 +2,7 @@ package com.migrosone.controller;
 
 import com.migrosone.controller.dto.CourierLocationRequest;
 import com.migrosone.domain.model.CourierLocation;
-import com.migrosone.domain.service.CourierService;
+import com.migrosone.application.service.CourierService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

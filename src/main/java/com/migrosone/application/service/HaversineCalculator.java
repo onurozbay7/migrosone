@@ -1,4 +1,4 @@
-package com.migrosone.domain.service;
+package com.migrosone.application.service;
 
 import org.springframework.stereotype.Component;
 
