@@ -1,5 +1,6 @@
 package com.migrosone.controller;
 
+import com.migrosone.controller.dto.CourierLocationRequest;
 import com.migrosone.domain.model.CourierLocation;
 import com.migrosone.domain.service.CourierService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,7 +23,7 @@ public class CourierController {
             description = "Receives current location of a courier and logs entry if it's near a store"
     )
     @PostMapping("/location")
-    public ResponseEntity<Void> sendLocation(@Valid @RequestBody CourierLocation request) {
+    public ResponseEntity<Void> sendLocation(@Valid @RequestBody CourierLocationRequest request) {
         CourierLocation location = modelMapper.map(request, CourierLocation.class);
         courierService.processLocation(location);
         return ResponseEntity.ok().build();
