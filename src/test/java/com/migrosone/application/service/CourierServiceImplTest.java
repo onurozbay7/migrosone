@@ -40,10 +40,6 @@ class CourierServiceImplTest {
     @InjectMocks
     private CourierServiceImpl courierService;
 
-    private static final String COURIER_ID = "courier-1";
-    private static final double LAT = 40.0;
-    private static final double LNG = 29.0;
-
 
     @Test
     void getTotalTravelDistance_shouldReturnCorrectValue() throws Exception {

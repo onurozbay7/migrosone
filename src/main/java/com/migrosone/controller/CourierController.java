@@ -1,5 +1,6 @@
 package com.migrosone.controller;
 
+import com.migrosone.controller.dto.ApiResponse;
 import com.migrosone.controller.dto.CourierLocationRequest;
 import com.migrosone.domain.model.CourierLocation;
 import com.migrosone.application.service.CourierService;
@@ -23,10 +24,10 @@ public class CourierController {
             description = "Receives current location of a courier and logs entry if it's near a store"
     )
     @PostMapping("/location")
-    public ResponseEntity<Void> sendLocation(@Valid @RequestBody CourierLocationRequest request) {
+    public ResponseEntity<ApiResponse<Void>> sendLocation(@Valid @RequestBody CourierLocationRequest request) {
         CourierLocation location = modelMapper.map(request, CourierLocation.class);
         courierService.processLocation(location);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(new ApiResponse<>("Location received successfully"));
     }
 
     @Operation(
@@ -34,8 +35,8 @@ public class CourierController {
             description = "Returns the total distance traveled by a courier since tracking started"
     )
     @GetMapping("/{courierId}/distance")
-    public ResponseEntity<Double> getTotalDistance(@PathVariable String courierId) {
+    public ResponseEntity<ApiResponse<Double>> getTotalTravelDistance(@PathVariable String courierId) {
         double distance = courierService.getTotalTravelDistance(courierId);
-        return ResponseEntity.ok(distance);
+        return ResponseEntity.ok(new ApiResponse<>("Distance fetched successfully", distance));
     }
 }

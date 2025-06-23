@@ -2,7 +2,7 @@ package com.migrosone.application.service;
 
 import org.springframework.stereotype.Component;
 
-import static com.migrosone.infrastructure.config.Constants.EARTH_RADIUS;
+import static com.migrosone.domain.util.Constants.EARTH_RADIUS;
 
 @Component
 public class HaversineCalculator implements DistanceCalculator {
