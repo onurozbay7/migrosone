@@ -1,0 +1,1 @@
+CREATE DATABASE migrosone_test;
