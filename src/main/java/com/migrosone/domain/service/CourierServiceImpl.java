@@ -8,12 +8,14 @@ import com.migrosone.domain.model.CourierState;
 import com.migrosone.domain.model.Store;
 import com.migrosone.infrastructure.config.StoreEntryProperties;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CourierServiceImpl implements CourierService {
@@ -27,6 +29,8 @@ public class CourierServiceImpl implements CourierService {
     @Override
     public void processLocation(CourierLocation location) {
         String courierId = location.getCourierId();
+        log.info("Received location update for courierId={}, lat={}, lng={}", courierId, location.getLat(), location.getLng());
+
         CourierState state = courierStates.computeIfAbsent(courierId, id -> new CourierState());
 
         updateCourierStateWithDistance(location, state);
@@ -42,6 +46,7 @@ public class CourierServiceImpl implements CourierService {
                     location.getLat(), location.getLng()
             );
             state.setTotalDistance(state.getTotalDistance() + distance);
+            log.debug("Updated total distance for courier: +{} meters (total={})", distance, state.getTotalDistance());
         }
     }
 
@@ -55,6 +60,7 @@ public class CourierServiceImpl implements CourierService {
             if (isEligibleForEntry(location, state, store)) {
                 state.getLastStoreEntryTimes().put(store.getName(), location.getTimestamp());
                 publishStoreEntryEvent(location, store);
+                log.info("Courier {} entered store '{}'", location.getCourierId(), store.getName());
             }
         }
     }
@@ -75,12 +81,18 @@ public class CourierServiceImpl implements CourierService {
                 location.getTimestamp()
         );
         eventPublisher.publish(event);
+        log.info("Published store entry event → courierId={}, store={}, time={}", location.getCourierId(), store.getName(), location.getTimestamp());
     }
 
     @Override
     public double getTotalTravelDistance(String courierId) {
-        return Optional.ofNullable(courierStates.get(courierId))
-                .orElseThrow(() -> new CourierNotFoundException(courierId))
-                .getTotalDistance();
+        CourierState state = Optional.ofNullable(courierStates.get(courierId))
+                .orElseThrow(() -> {
+                    log.warn("Tried to get distance for unknown courierId={}", courierId);
+                    return new CourierNotFoundException(courierId);
+                });
+
+        log.info("Queried total distance for courierId={}, total={} meters", courierId, state.getTotalDistance());
+        return state.getTotalDistance();
     }
 }

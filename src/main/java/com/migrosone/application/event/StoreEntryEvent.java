@@ -1,11 +1,12 @@
 package com.migrosone.application.event;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
-@RequiredArgsConstructor
+
 @Getter
+@AllArgsConstructor
 public class StoreEntryEvent {
 
     private final String courierId;
