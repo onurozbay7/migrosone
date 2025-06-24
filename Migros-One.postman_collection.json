@@ -1,0 +1,52 @@
+{
+	"info": {
+		"_postman_id": "5cf24486-83de-49c2-99c0-02e1af60d7e1",
+		"name": "Migros-One",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20466536",
+		"_collection_link": "https://restless-meadow-856515.postman.co/workspace/TRS~63ffb958-8a9e-41ba-8b7a-9485f47da2cb/collection/20466536-5cf24486-83de-49c2-99c0-02e1af60d7e1?action=share&source=collection_link&creator=20466536"
+	},
+	"item": [
+		{
+			"name": "sendLocaiton",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"courierId\": \"courier_1\",\r\n    \"lat\": 40.9923310,\r\n    \"lng\": 29.1244220,\r\n    \"timestamp\": \"2025-06-20T11:00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/couriers/location",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"couriers",
+						"location"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getTotalTravelDistance",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

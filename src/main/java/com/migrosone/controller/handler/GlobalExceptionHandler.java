@@ -30,13 +30,13 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<?> handleMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
+    public ResponseEntity<?> handleMethodNotSupported() {
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
                 .body(Map.of("error", "HTTP method not allowed for this endpoint"));
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleGeneric(Exception ex) {
+    public ResponseEntity<?> handleGeneric() {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error("Internal server error"));
     }
 
